@@ -1,7 +1,7 @@
 package routers
 
 import (
-    "github.com/igordonshaw/inote/controllers"
+    "github.com/1for/inote/controllers"
     "github.com/astaxie/beego"
     "github.com/astaxie/beego/context"
     "strings"

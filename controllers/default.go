@@ -2,7 +2,7 @@ package controllers
 
 import (
 	"github.com/astaxie/beego"
-	"github.com/igordonshaw/inote/models"
+	"github.com/1for/inote/models"
 	"strconv"
     "strings"
     "time"
@@ -63,27 +63,27 @@ type PostController struct {
 }
 
 func (this *MainController) LoginPage(){
-	this.TplNames = "admin/login.html"
+	this.TplName = "admin/login.html"
 }
 
 func (this *MainController) Main(){
-    this.TplNames = "admin/main.html"
+    this.TplName = "admin/main.html"
 }
 
 func (this *MainController) UserPage(){
-    this.TplNames = "admin/user.html"
+    this.TplName = "admin/user.html"
 }
 
 func (this *MainController) PostPage(){
-    this.TplNames = "admin/post.html"
+    this.TplName = "admin/post.html"
 }
 
 func (this *MainController) MessagePage(){
-    this.TplNames = "admin/message.html"
+    this.TplName = "admin/message.html"
 }
 
 func (this *MainController) WritePage(){
-    this.TplNames = "admin/write.html"
+    this.TplName = "admin/write.html"
 }
 
 func (this *UserControlelr) Author(){
@@ -91,7 +91,7 @@ func (this *UserControlelr) Author(){
     user := models.User{Id: int64(1)}
     qsUser.Query().Filter("id", 1).One(&user)
     this.Data["json"] = user
-    this.ServeJson()
+    this.ServeJSON()
 }
 
 func (this *MainController) ValidUser(){
@@ -110,7 +110,7 @@ func (this *MainController) ValidUser(){
             res.Msg = "连续尝试"+strconv.Itoa(LOGIN_COUNT)+"次登录失败, 请隔"+strconv.Itoa(int(RELOGIN_PERIOD))+"秒后再登录"
         }
         this.Data["json"] = res
-        this.ServeJson()
+        this.ServeJSON()
         return;
     }
 
@@ -125,7 +125,7 @@ func (this *MainController) ValidUser(){
         res.Success = false
         res.Msg = "登录失败"
         this.Data["json"] = res
-        this.ServeJson()
+        this.ServeJSON()
         return;
     }
     /*maxAge := 0
@@ -137,7 +137,7 @@ func (this *MainController) ValidUser(){
 	res.Success = true
     res.Msg = "登录成功"
     this.Data["json"] = res
-    this.ServeJson()
+    this.ServeJSON()
 	return
 }
 
@@ -145,13 +145,13 @@ func (this *MainController) Logout(){
     this.DelSession("inote")
     res := &ResEntity{true, "退出成功", nil}
     this.Data["json"] = res
-    this.ServeJson()
+    this.ServeJSON()
     return
 }
 
 
 func (this *MainController) Get() {
-    this.TplNames = "main.html"
+    this.TplName = "main.html"
 }
 
 func (this *MainController) UserUpdate(){
@@ -169,7 +169,7 @@ func (this *MainController) UserUpdate(){
     userFront.Update()
     res := &ResEntity{true, "修改成功", nil}
     this.Data["json"] = res
-    this.ServeJson()
+    this.ServeJSON()
     return
 }
 
@@ -185,7 +185,7 @@ func (this *MainController) ResetPwd(){
 
     res := &ResEntity{true, "修改成功", nil}
     this.Data["json"] = res
-    this.ServeJson()
+    this.ServeJSON()
     return;
 }
 
@@ -207,7 +207,7 @@ func (this *PostController) ListPosts(){
     o.Raw(sql).QueryRows(&posts)
 
     this.Data["json"] = posts
-    this.ServeJson()
+    this.ServeJSON()
     return
 }
 
@@ -216,7 +216,7 @@ func (this *PostController) Posts(){
     qsPost := new(models.Post)
     qsPost.Query().OrderBy("-PublishAt").All(&posts)
     this.Data["json"] = posts
-    this.ServeJson()
+    this.ServeJSON()
     return
 }
 
@@ -236,7 +236,7 @@ func (this *MainController) SavePost(){
         res.Success = false
         res.Msg = "无效的内容"
         this.Data["json"] = res
-        this.ServeJson()
+        this.ServeJSON()
         return
     }
 
@@ -271,7 +271,7 @@ func (this *MainController) SavePost(){
     res.Success = true
     res.Msg = "保存成功"
     this.Data["json"] = res
-    this.ServeJson()
+    this.ServeJSON()
     return
 }
 
@@ -288,7 +288,7 @@ func (this *MainController) DeletePost(){
         res.Success = false
         res.Msg = "删除失败"
         this.Data["json"] = res
-        this.ServeJson()
+        this.ServeJSON()
         return
     }
 
@@ -298,7 +298,7 @@ func (this *MainController) DeletePost(){
     res.Success = true
     res.Msg = "删除成功"
     this.Data["json"] = res
-    this.ServeJson()
+    this.ServeJSON()
     return
 }
 
@@ -318,7 +318,7 @@ func(this *PostController) SubmitMsg(){
         res.Success = false
         res.Msg = "无效的留言"
         this.Data["json"] = res
-        this.ServeJson()
+        this.ServeJSON()
         return
     }
 
@@ -341,13 +341,13 @@ func(this *PostController) SubmitMsg(){
         res.Success = false
         res.Msg = "添加留言失败"
         this.Data["json"] = res
-        this.ServeJson()
+        this.ServeJSON()
         return
     }
     res.Success = true
     res.Msg = "添加留言成功"
     this.Data["json"] = res
-    this.ServeJson()
+    this.ServeJSON()
     return
 
 }
@@ -376,7 +376,7 @@ func (this *PostController) OnePost(){
         res.Success = false
         res.Msg = "还没有内容"
         this.Data["json"] = res
-        this.ServeJson()
+        this.ServeJSON()
         return
     }*/
     messages := []models.Message{}
@@ -389,7 +389,7 @@ func (this *PostController) OnePost(){
     res.Success = true
     res.Data = resPost
 	this.Data["json"] = res
-    this.ServeJson()
+    this.ServeJSON()
     return
 }
 
@@ -411,7 +411,7 @@ func (this *MainController) ListMessage(){
     o.Raw(sql).QueryRows(&messages)
 
     this.Data["json"] = messages
-    this.ServeJson()
+    this.ServeJSON()
     return
 }
 
@@ -428,14 +428,14 @@ func (this *MainController) DeleteMessage(){
         res.Success = false
         res.Msg = "删除失败"
         this.Data["json"] = res
-        this.ServeJson()
+        this.ServeJSON()
         return
     }
 
     res.Success = true
     res.Msg = "删除成功"
     this.Data["json"] = res
-    this.ServeJson()
+    this.ServeJSON()
     return
 }
 
@@ -453,7 +453,7 @@ func (this *MainController) ReplyMessage(){
         res.Success = false
         res.Msg = "无效的回复"
         this.Data["json"] = res
-        this.ServeJson()
+        this.ServeJSON()
         return
     }
     messageId,err :=strconv.Atoi(frontPeply.MessageId)
@@ -468,7 +468,7 @@ func (this *MainController) ReplyMessage(){
     res.Success = true
     res.Msg = "回复成功"
     this.Data["json"] = res
-    this.ServeJson()
+    this.ServeJSON()
     return
 }
 
@@ -478,14 +478,14 @@ func (this *MainController) ImgUp() {
         beego.Error(err.Error())
         res := &ResEntity{false, "服务器错误",nil}
         this.Data["json"] = res
-        this.ServeJson()
+        this.ServeJSON()
     }
     fileName := fileHeder.Filename
 
     if strings.Index(fileName, ".") <= 0 {
         res := &ResEntity{false, "错误的图片文件!", ""}
         this.Data["json"] = res
-        this.ServeJson()
+        this.ServeJSON()
         return
     }
 
@@ -504,7 +504,7 @@ func (this *MainController) ImgUp() {
     if !isExtPass {
         res := &ResEntity{false, "不支持的图片格式!", ""}
         this.Data["json"] = res
-        this.ServeJson()
+        this.ServeJSON()
         return
     }
 
@@ -516,7 +516,7 @@ func (this *MainController) ImgUp() {
 
     res := &ResEntity{true, "", "/" + beego.AppConfig.String("uploaddir") + fileNewName}
     this.Data["json"] = res
-    this.ServeJson()
+    this.ServeJSON()
 }
 
 
